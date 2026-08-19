@@ -1,0 +1,16 @@
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+
+@Component({
+  selector: 'app-navbar',
+  imports: [RouterLink],
+  templateUrl: './navbar.html',
+  styleUrl: './navbar.css',
+})
+export class NavbarComponent {
+  private router = inject(Router);
+  logout(): void {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
+}

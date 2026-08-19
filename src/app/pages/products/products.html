@@ -1,0 +1,13 @@
+<h1>Products</h1>
+
+<h2>Count: {{ products().length }}</h2>
+
+@for (product of products(); track product.id) {
+
+<div>
+  <h3><a [routerLink]="['/products', product.id]">{{ product.name }}</a></h3>
+  <p>Price: {{ product.price }}</p>
+  <p>Stock: {{ product.stock }}</p>
+  <hr>
+</div>
+}

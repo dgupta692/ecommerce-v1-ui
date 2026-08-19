@@ -1,0 +1,31 @@
+@for(order of orders(); track order.id)
+{
+  <app-order-card
+      [order]="order" (viewOrder)="showOrder($event)">
+  </app-order-card>
+}
+
+<!-- @if (orders().length === 0)
+{
+<h3>No orders found.</h3>
+}
+@else
+{
+@for (order of orders(); track order.id)
+{
+<div>
+
+    <p><a [routerLink]="['/orders', order.id]" ]>Order #: {{ order.id }}</a></p>
+
+    <p>Product Id: {{ order.productId }}</p>
+
+    <p>Product Name: {{ order.productName }}</p>
+
+    <p>Product Price: {{ order.productPrice }}</p>
+
+    <p>Quantity: {{ order.quantity }}</p>
+
+    <p>Total Price: {{ order.totalPrice }}</p>
+</div>
+}
+} -->
