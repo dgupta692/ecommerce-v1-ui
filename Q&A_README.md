@@ -595,50 +595,616 @@ EventEmitter
 
 ---
 
-# Project Features Implemented
+# 34. What are Angular Lifecycle Hooks?
+
+Lifecycle Hooks are methods that Angular calls during the creation, update, and destruction of a component.
+
+Common Lifecycle Hooks:
+
+- ngOnInit
+- ngOnChanges
+- ngAfterViewInit
+- ngOnDestroy
+
+---
+
+## 35. What is ngOnInit?
+
+Called once after Angular initializes the component.
+
+Example:
+
+```typescript
+ngOnInit(): void {
+    this.loadProducts();
+}
+```
+
+Use Cases:
+
+- API Calls
+- Initial Data Loading
+
+---
+
+## 36. What is ngOnChanges?
+
+Called whenever an @Input property changes.
+
+Example:
+
+```typescript
+ngOnChanges(): void {
+    console.log('Input changed');
+}
+```
+
+Use Cases:
+
+- Detect parent-to-child data changes
+- Refresh UI
+
+---
+
+## 37. What is ngAfterViewInit?
+
+Called after Angular initializes the component view.
+
+Example:
+
+```typescript
+ngAfterViewInit(): void {
+    console.log('View loaded');
+}
+```
+
+Use Cases:
+
+- Access UI elements
+- Initialize charts
+- Focus inputs
+
+---
+
+## 38. What is ngOnDestroy?
+
+Called when a component is destroyed.
+
+Example:
+
+```typescript
+ngOnDestroy(): void {
+    console.log('Component destroyed');
+}
+```
+
+Use Cases:
+
+- Cleanup resources
+- Unsubscribe observables
+- Clear timers
+
+---
+
+## 39. Why is ngOnDestroy Important?
+
+Without cleanup:
+
+```text
+Memory Leaks
+Multiple API Subscriptions
+Performance Issues
+```
+
+Example:
+
+```typescript
+this.subscription.unsubscribe();
+```
+
+---
+
+# 40. What are RxJS Operators?
+
+Operators are functions used to transform, filter, combine, and handle Observable streams.
+
+Examples:
+
+- map
+- tap
+- switchMap
+- catchError
+- forkJoin
+
+---
+
+## 41. What is map()?
+
+Used to transform emitted data.
+
+Example:
+
+```typescript
+map(product =>
+({
+    ...product,
+    price: product.price * 0.9
+}))
+```
+
+Use Case:
+
+```text
+Transform API Response
+```
+
+---
+
+## 42. What is tap()?
+
+Used for side effects.
+
+Example:
+
+```typescript
+tap(response =>
+{
+    console.log(response);
+})
+```
+
+Use Cases:
+
+- Logging
+- Debugging
+
+It does not modify data.
+
+---
+
+## 43. What is switchMap()?
+
+Cancels the previous Observable and subscribes to a new one.
+
+Example:
+
+```typescript
+searchText$
+    .pipe(
+        switchMap(text =>
+            this.productService.search(text)
+        )
+    );
+```
+
+Use Cases:
+
+- Search Boxes
+- Autocomplete
+
+---
+
+## 44. What is catchError()?
+
+Used to handle errors inside RxJS pipelines.
+
+Example:
+
+```typescript
+catchError(err =>
+{
+    console.error(err);
+
+    return throwError(() => err);
+});
+```
+
+---
+
+## 45. What is forkJoin()?
+
+Executes multiple API calls and waits for all of them to complete.
+
+Example:
+
+```typescript
+forkJoin([
+    this.productService.getProducts(),
+    this.orderService.getOrders()
+]);
+```
+
+Use Cases:
+
+- Dashboard Pages
+- Multiple API Calls
+
+---
+
+# 46. What is a Loading Spinner?
+
+A visual indicator shown while waiting for data.
+
+Example:
+
+```typescript
+isLoading = signal(true);
+```
+
+API Success:
+
+```typescript
+this.isLoading.set(false);
+```
+
+Use Case:
+
+```text
+Better User Experience
+```
+
+---
+
+# 47. What is Global Error Handling?
+
+A centralized way of handling application-wide errors.
+
+Instead of:
+
+```typescript
+error: err =>
+{
+}
+```
+
+inside every API call.
+
+We use:
+
+```typescript
+Error Interceptor
+```
+
+---
+
+## 48. Why use an Error Interceptor?
+
+Benefits:
+
+- Centralized error handling
+- Less duplicate code
+- Better user experience
+
+Examples:
+
+```text
+401 → Login Page
+
+404 → Not Found
+
+500 → Server Error Message
+```
+
+---
+
+# 49. What is Pagination?
+
+Pagination divides large datasets into smaller pages.
+
+Example:
+
+```text
+Page 1
+Page 2
+Page 3
+```
+
+Benefits:
+
+- Better Performance
+- Faster Loading
+- Reduced Network Traffic
+
+---
+
+## 50. Backend Pagination Example
+
+```http
+/api/product?pageNumber=1&pageSize=10
+```
+
+---
+
+# 51. What is Search Functionality in Angular?
+
+Allows users to filter or search data.
+
+Example:
+
+```html
+<input [(ngModel)]="searchText">
+```
+
+Use Cases:
+
+- Product Search
+- Customer Search
+
+---
+
+## 52. Why use debounceTime()?
+
+Prevents API calls on every key press.
+
+Example:
+
+```typescript
+debounceTime(500)
+```
+
+Flow:
+
+```text
+L
+La
+Lap
+Laptop
+```
+
+Only one API call is sent.
+
+---
+
+## 53. What is distinctUntilChanged()?
+
+Prevents duplicate API calls for the same value.
+
+Example:
+
+```typescript
+distinctUntilChanged()
+```
+
+Use Case:
+
+```text
+Laptop
+Laptop
+Laptop
+```
+
+Only first request is executed.
+
+---
+
+# 54. What are Angular Pipes?
+
+Pipes transform data before displaying it.
+
+Built-in Pipes:
+
+- date
+- currency
+- uppercase
+- lowercase
+
+Example:
+
+```html
+{{ price | currency:'INR' }}
+```
+
+---
+
+## 55. What is a Custom Pipe?
+
+A user-defined pipe.
+
+Example:
+
+```typescript
+@Pipe({
+    name:'orderStatus'
+})
+```
+
+Use Case:
+
+```text
+P → Pending
+
+C → Completed
+```
+
+---
+
+# 56. What is Computed Signal?
+
+Derived state based on other signals.
+
+Example:
+
+```typescript
+cartItems = signal([]);
+
+cartCount = computed(
+    () => this.cartItems().length
+);
+```
+
+Use Cases:
+
+- Cart Count
+- Derived Data
+
+---
+
+# 57. What is effect()?
+
+Runs automatically when dependent signals change.
+
+Example:
+
+```typescript
+effect(() =>
+{
+    console.log(
+        this.cartCount()
+    );
+});
+```
+
+Use Cases:
+
+- Logging
+- Notifications
+- Side Effects
+
+---
+
+# 58. What are Environment Files?
+
+Environment files store application configuration.
+
+Example:
+
+```typescript
+export const environment = {
+  apiGateway:
+    'http://localhost:7006'
+};
+```
+
+Use Cases:
+
+- API URLs
+- Feature Flags
+- Environment-specific settings
+
+---
+
+# 59. Why Should API URLs Not Be Hardcoded?
+
+Bad:
+
+```typescript
+'http://localhost:7006/products/api/product'
+```
+
+Good:
+
+```typescript
+environment.apiGateway
+```
+
+Benefits:
+
+- Easier maintenance
+- Production deployment support
+
+---
+
+# 60. What is State Management?
+
+State Management is the process of managing application data.
+
+Examples:
+
+```text
+Logged In User
+Cart Items
+Selected Product
+Theme
+```
+
+Angular Options:
+
+- Signals
+- Services
+- NgRx
+
+---
+
+# 61. What is the Difference Between Signal and Observable?
+
+Signal:
+
+```text
+Synchronous
+Stores current value
+Angular State Management
+```
+
+Observable:
+
+```text
+Asynchronous
+Stream of data
+API Calls
+```
+
+Use:
+
+```typescript
+signal()
+```
+
+for UI state.
+
+Use:
+
+```typescript
+Observable
+```
+
+for HTTP requests.
+
+---
+
+# Additional Features Implemented
 
 ✅ Login Page
 
-✅ Reactive Forms
-
 ✅ JWT Authentication
-
-✅ Route Navigation
 
 ✅ Product Listing
 
 ✅ Product Details
 
-✅ GET By Id
-
-✅ Create Order
+✅ Order Creation
 
 ✅ Order History
 
-✅ Angular Services
-
-✅ HttpClient
-
-✅ Observables
-
-✅ Subscribe
-
-✅ Signals
-
-✅ Interceptor
-
-✅ Guard
+✅ Order Details
 
 ✅ Route Parameters
 
-✅ ActivatedRoute
+✅ Reactive Forms
+
+✅ Template Forms
+
+✅ Signals
 
 ✅ @Input
 
 ✅ @Output
 
-✅ Parent Child Communication
+✅ Parent-Child Communication
+
+✅ Guards
+
+✅ Interceptors
+
+✅ Navbar
 
 ✅ Logout
 
-✅ Navbar
+✅ Dynamic Routing
+
+✅ HttpClient
+
+✅ RxJS
+
+✅ localStorage
+
+✅ Dependency Injection

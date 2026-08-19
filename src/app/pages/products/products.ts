@@ -3,11 +3,12 @@ import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
 import { OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CurrencyPipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-products',
-  imports: [RouterLink],
+  imports: [RouterLink, CurrencyPipe],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })

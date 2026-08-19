@@ -11,7 +11,7 @@
 
   <p>
     Price:
-    {{ o.productPrice }}
+    {{ o.productPrice | currency: 'INR' }}
   </p>
 
   <p>
@@ -21,6 +21,6 @@
 
   <p>
     Total:
-    {{ o.totalPrice }}
+    {{ o.totalPrice | currency: 'INR' }}
   </p>
 }

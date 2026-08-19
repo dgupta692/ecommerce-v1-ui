@@ -1,7 +1,9 @@
 <div class="card">
+  <p><a [routerLink]="['/orders', order.id]" ]>Order #: {{ order.id }}</a></p>
+  
   <h3>{{ order.productName }}</h3>
 
-  <p>Total: {{ order.totalPrice }}</p>
+  <p>Total: {{ order.totalPrice | currency:'INR' }}</p>
 </div>
 
 <button (click)="openOrder()">

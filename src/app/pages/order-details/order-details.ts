@@ -2,10 +2,11 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { ActivatedRoute } from '@angular/router';
 import { Order } from '../../models/Order';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-order-details',
-  imports: [],
+  imports: [CurrencyPipe],
   templateUrl: './order-details.html',
   styleUrl: './order-details.css',
 })

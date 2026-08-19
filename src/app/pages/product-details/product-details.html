@@ -7,7 +7,7 @@
 
 <p>
     Price:
-    {{ product()?.price }}
+    {{ product()?.price | currency: 'INR' }}
 </p>
 
 <p>

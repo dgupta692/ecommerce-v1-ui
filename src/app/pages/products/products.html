@@ -6,7 +6,7 @@
 
 <div>
   <h3><a [routerLink]="['/products', product.id]">{{ product.name }}</a></h3>
-  <p>Price: {{ product.price }}</p>
+  <p>Price: {{ product.price | currency: 'INR' }}</p>
   <p>Stock: {{ product.stock }}</p>
   <hr>
 </div>
